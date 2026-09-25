@@ -1,5 +1,6 @@
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from app.services.face_service import face_service
+from app.core.security import verify_api_key
 
 router = APIRouter(
     prefix="/api/v1/faces",
@@ -15,7 +16,7 @@ ALLOWED_CONTENT_TYPES = {
 MAX_FILE_SIZE = 10 * 1024 * 1024
 
 
-@router.post("/compare")
+@router.post("/compare", dependencies=[Depends(verify_api_key)])
 async def compare_faces(
     document: UploadFile = File(...),
     selfie: UploadFile = File(...),

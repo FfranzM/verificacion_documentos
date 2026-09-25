@@ -1,12 +1,13 @@
 import os
 import tempfile
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 
 from app.services.document_classifier import document_classifier
 from app.services.document_field_extractor import document_field_extractor
 from app.services.name_matcher import name_matcher
 from app.services.ocr_service import ocr_service
+from app.core.security import verify_api_key
 
 
 router = APIRouter(
@@ -24,7 +25,7 @@ ALLOWED_CONTENT_TYPES = {
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB
 
 
-@router.post("/analyze")
+@router.post("/analyze", dependencies=[Depends(verify_api_key)])
 async def analyze_document(
     file: UploadFile = File(...),
     name: str = Form(...),
