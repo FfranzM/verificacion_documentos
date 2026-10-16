@@ -9,6 +9,7 @@ class DocumentFieldExtractor:
             for line in lines
             if line.get("text", "").strip()
         ]
+
         if document_type == "birth_certificate":
             return self._extract_birth_certificate(texts)
 
@@ -24,9 +25,20 @@ class DocumentFieldExtractor:
         if document_type == "insurance_policy":
             return self._extract_insurance_policy(texts)
 
+        # NUEVO: Comprobante de domicilio
+        if document_type == "proof_of_address":
+            return self._extract_proof_of_address(texts)
+
+        # NUEVO: Tarjeta de circulación
+        if document_type == "vehicle_registration":
+            return self._extract_vehicle_registration(texts)
+
         return {"name": None}
 
-    def _extract_birth_certificate(self,lines: list[str],) -> dict:
+    def _extract_birth_certificate(
+        self,
+        lines: list[str],
+    ) -> dict:
         start_index = None
         end_index = None
 
@@ -102,6 +114,44 @@ class DocumentFieldExtractor:
                 "ASEGURADO",
                 "NOMBRE DEL ASEGURADO",
                 "CONTRATANTE",
+            ],
+        )
+
+        return {"name": name}
+
+    # NUEVO: Comprobante de domicilio
+    def _extract_proof_of_address(
+        self,
+        lines: list[str],
+    ) -> dict:
+        name = self._extract_after_label(
+            lines,
+            labels=[
+                "NOMBRE",
+                "NOMBRE DEL CLIENTE",
+                "NOMBRE DEL TITULAR",
+                "TITULAR",
+                "CLIENTE",
+                "USUARIO",
+                "RAZON SOCIAL",
+            ],
+        )
+
+        return {"name": name}
+
+    # NUEVO: Tarjeta de circulación
+    def _extract_vehicle_registration(
+        self,
+        lines: list[str],
+    ) -> dict:
+        name = self._extract_after_label(
+            lines,
+            labels=[
+                "PROPIETARIO",
+                "NOMBRE DEL PROPIETARIO",
+                "NOMBRE",
+                "TITULAR",
+                "NOMBRE DEL TITULAR",
             ],
         )
 

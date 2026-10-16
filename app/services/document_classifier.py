@@ -39,7 +39,6 @@ class DocumentClassifier:
         },
         "curp": {
             "threshold": 0.60,
-
             "keywords": {
                 "CONSTANCIA DE LA CLAVE UNICA DE REGISTRO DE POBLACION": 0.45,
                 "CURP CERTIFICADA": 0.30,
@@ -47,7 +46,6 @@ class DocumentClassifier:
                 "GOBERNACION": 0.10,
                 "ENTIDAD DE REGISTRO": 0.05,
             },
-
             "exclude_if_contains": [
                 "ACTA DE NACIMIENTO",
                 "NUMERO DE CERTIFICADO DE NACIMIENTO",
@@ -63,6 +61,43 @@ class DocumentClassifier:
                 "VIGENCIA": 0.10,
                 "PRIMA": 0.05,
                 "SUMA ASEGURADA": 0.05,
+            },
+        },
+
+        "proof_of_address": {
+            "threshold": 0.50,
+            "keywords": {
+                "COMPROBANTE DE DOMICILIO": 0.50,
+                "COMISION FEDERAL DE ELECTRICIDAD": 0.40,
+                "CFE": 0.20,
+                "RECIBO DE LUZ": 0.40,
+                "RECIBO DE AGUA": 0.40,
+                "ESTADO DE CUENTA": 0.40,
+                "TOTAL A PAGAR": 0.30,
+                "C.P.": 0.30,
+                "SUMINISTRO DE ENERGIA ELECTRICA": 0.30,
+                "SERVICIO DE AGUA POTABLE": 0.30,
+                "TOTAL A PAGAR": 0.10,
+                "PERIODO FACTURADO": 0.15,
+                "FECHA LIMITE DE PAGO": 0.10,
+                "DOMICILIO DEL SERVICIO": 0.20,
+            },
+        },
+
+        "vehicle_registration": {
+            "threshold": 0.50,
+            "keywords": {
+                "TARJETA DE CIRCULACION": 0.60,
+                "SECRETARIA DE MOVILIDAD": 0.20,
+                "CONTROL VEHICULAR": 0.20,
+                "NUMERO DE SERIE": 0.10,
+                "NUMERO DE MOTOR": 0.10,
+                "PLACAS": 0.15,
+                "MARCA": 0.05,
+                "MODELO": 0.05,
+                "CLASE": 0.05,
+                "TIPO DE VEHICULO": 0.10,
+                "PROPIETARIO": 0.15,
             },
         },
     }
